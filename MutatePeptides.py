@@ -85,7 +85,7 @@ if len(sys.argv) == 3:  # could be either only an input and output file or only 
         for each in sys.argv[2].split(','):
             conserved_index_list.append(int(each) - 1)  # turns residue number into residue index
     else:
-        output_folder_path = sys.argv[3]
+        output_folder_path = sys.argv[2]
 
 if len(sys.argv) == 4:  # means there will be both conserved residues and an output file to deal with
     for each in sys.argv[2].split(','):
