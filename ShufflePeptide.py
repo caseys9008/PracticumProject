@@ -110,7 +110,7 @@ for i in range(len(input_fasta_list)):
         not_conserved_residues += input_fasta_list[i]
 
 # FIND ALL UNIQUE PERMUTATIONS OF THE NON CONSERVED RESIDUES (save to list) -----------------------------------------
-all_nc_permutations = set(list(itertools.permutations(not_conserved_residues)))
+all_nc_permutations = set(itertools.permutations(not_conserved_residues))
 
 # LOOP THROUGH EACH PERMUTATION AND ADD BACK IN CONSERVED RESIDUES --------------------------------------------------
 all_shuffled_strings = []
@@ -134,10 +134,10 @@ ref_file_name = output_folder_path + "/REFERENCE.txt"  # the output folder path 
 os.makedirs(os.path.dirname(ref_file_name), exist_ok=True)  # this should create the directory correctly
 with open(ref_file_name, 'w+') as reference_file:  # have the reference file open the whole time
     for i in range(len(all_shuffled_strings)):
-        gen_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + ".fasta"
-        with open(gen_file_name, 'w+') as seq_file:
-            seq_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i])
-            reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i]+ "\n")
+        #gen_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + ".fasta"
+        #with open(gen_file_name, 'w+') as seq_file:
+            #seq_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i])
+        reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i]+ "\n")
 
 
 
