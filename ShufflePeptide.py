@@ -1,4 +1,4 @@
-# ==================================================================================================================
+# ===================================================================================================================
 # This script will take in a FASTA file and a list of residues to be preserved.  A file with the same
 # name as the fasta file will be generated that contains fasta sequences of all other of all other possible options
 # with the specified conserved amino acids unchanged

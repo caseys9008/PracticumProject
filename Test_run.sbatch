@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash 
 #SBATCH --job-name=serial_job_test    # Job name
 #SBATCH --mail-type=ALL               # Mail events (NONE, BEGIN, END, FAIL, ALL)
 #SBATCH --mail-user=caseys@uchicago.edu    # Where to send mail
