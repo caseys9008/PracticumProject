@@ -130,7 +130,8 @@ for perm in all_nc_permutations: # need to be a small enough number that you can
     all_shuffled_strings.append(new_perm_string)
 
 # SAVE ALL THE SHUFFLED SEQUENCES TO FASTA FILES IN A FOLDER (include reference file for quick lookup) --------------
-ref_file_name = output_folder_path + "/REFERENCE.txt"  # the output folder path will contain the name of the folder
+
+ref_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] +  "_ALL_OUTPUT.fasta"  # the output folder path will contain the name of the folder
 os.makedirs(os.path.dirname(ref_file_name), exist_ok=True)  # this should create the directory correctly
 with open(ref_file_name, 'w+') as reference_file:  # have the reference file open the whole time
     for i in range(len(all_shuffled_strings)):
