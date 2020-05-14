@@ -1,4 +1,4 @@
-# ===================================================================================================================
+# ==================================================================================================================
 # This script will take in a FASTA file and a list of residues to be preserved.  A file with the same
 # name as the fasta file will be generated that contains fasta sequences of all other of all other possible options
 # with the specified conserved amino acids unchanged
@@ -129,18 +129,32 @@ for perm in all_nc_permutations: # need to be a small enough number that you can
             i += 1
     all_shuffled_strings.append(new_perm_string)
 
-# SAVE ALL THE SHUFFLED SEQUENCES TO FASTA FILES IN A FOLDER (include reference file for quick lookup) --------------
+# SAVE THE FASTAs TO MULTIPLE OUTPUT FOLDERS
+out_file_count = 1
+num_per_file = 10000  # <---------- CHANGE THIS TO CHANGE NUM FASTAs PER OUTPUT FILE ****************************
+i = 0
 
-ref_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] +  "_ALL_OUTPUT.fasta"  # the output folder path will contain the name of the folder
-os.makedirs(os.path.dirname(ref_file_name), exist_ok=True)  # this should create the directory correctly
-with open(ref_file_name, 'w+') as reference_file:  # have the reference file open the whole time
-    for i in range(len(all_shuffled_strings)):
-        #gen_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + ".fasta"
-        #with open(gen_file_name, 'w+') as seq_file:
-            #seq_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i])
-        reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str(i + 1) + "\n" + all_shuffled_strings[i]+ "\n")
+# create the directory
+directory = output_folder_path + "/"
+os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the directory correctly
 
+while len(all_shuffled_strings) > 0:
+    i = 0
+    start = ((out_file_count - 1) * num_per_file) + 1
+    stop = start + num_per_file - 1
+    if len(all_shuffled_strings) < num_per_file:
+        stop = start + len(all_shuffled_strings) - 1
+    ref_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + \
+                    str(out_file_count) + "_(" + str(start) + "-" + str(stop) + ").fasta"
 
+    with open(ref_file_name, 'w+') as reference_file:
+        for seq in all_shuffled_strings[:num_per_file]:
+            reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str((i + 1 + (num_per_file * (out_file_count - 1)))) +
+                                 "\n" + all_shuffled_strings[i] + "\n")
+            i += 1
+
+    all_shuffled_strings = all_shuffled_strings[num_per_file:]
+    out_file_count += 1
 
 
 # == OTHER STUFF (to maybe use later) ============================================================================
