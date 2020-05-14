@@ -111,6 +111,7 @@ for i in range(len(input_fasta_list)):
 
 # FIND ALL UNIQUE PERMUTATIONS OF THE NON CONSERVED RESIDUES (save to list) -----------------------------------------
 all_nc_permutations = set(itertools.permutations(not_conserved_residues))
+print("Saved all shuffles to array")
 
 # LOOP THROUGH EACH PERMUTATION AND ADD BACK IN CONSERVED RESIDUES --------------------------------------------------
 all_shuffled_strings = []
@@ -128,15 +129,17 @@ for perm in all_nc_permutations: # need to be a small enough number that you can
             new_perm_string += input_fasta[i]
             i += 1
     all_shuffled_strings.append(new_perm_string)
+print("Added back conserved residues to shuffled array list")
 
 # SAVE THE FASTAs TO MULTIPLE OUTPUT FOLDERS
 out_file_count = 1
-num_per_file = 10000  # <---------- CHANGE THIS TO CHANGE NUM FASTAs PER OUTPUT FILE ****************************
+num_per_file = 100000  # <---------- CHANGE THIS TO CHANGE NUM FASTAs PER OUTPUT FILE ****************************
 i = 0
 
 # create the directory
 directory = output_folder_path + "/"
 os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the directory correctly
+print("Created the Directory")
 
 while len(all_shuffled_strings) > 0:
     i = 0
@@ -152,7 +155,7 @@ while len(all_shuffled_strings) > 0:
             reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str((i + 1 + (num_per_file * (out_file_count - 1)))) +
                                  "\n" + all_shuffled_strings[i] + "\n")
             i += 1
-
+    print("Wrote output file " + str(out_file_count))
     all_shuffled_strings = all_shuffled_strings[num_per_file:]
     out_file_count += 1
 
