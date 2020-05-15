@@ -99,8 +99,6 @@ for i in range(len(input_fasta_list)):
         not_conserved_residues += input_fasta_list[i]
 
 
-
-
 # FIND ALL UNIQUE PERMUTATIONS OF THE NON CONSERVED RESIDUES (save to list) -----------------------------------------
 # all_nc_permutations = set(itertools.permutations(not_conserved_residues))
 # print("Saved all shuffles to array")
@@ -112,108 +110,76 @@ os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the
 print("Created the Directory")
 
 
-# Create a temporary file in that directory
-ref_file_name = output_folder_path + "/TEMP.fasta"
-#temp_file = open(ref_file_name, "r+")
-with open(ref_file_name, 'w+') as reference_file:
-
-    for each in itertools.permutations(input_fasta):  # loop through every possible permutation
-        res_conserved = True # boolean to keep track of if the residues are conserved correctly
-        repeat = False
-
-        # # check everything that has already been written to the file to eliminate repeats
-
-        # check for conserved residues
-        for index in conserved_index_list:
-            if not each[index] == input_fasta[index]:
-                res_conserved = False
-
-        if res_conserved and not repeat:
-            reference_file.write(''.join(each) + ",")
-
-# how read in that temporary file and turn it into another termporary file (but one without repeats)
+max_array_size = 500000000  # < -- the max size of a functioning python array is 536,870,912 elements.
+array_below_500mil = []
+num_output_files = 1
+fastas_per_file = 100000000
 
 
+# loop through each in the itertools.permutations
+for each in itertools.permutations(input_fasta):
+
+    res_conserved = True
+    repeat = False
+
+    # check that it has the conserved residues
+    for index in conserved_index_list:
+        if not each[index] == input_fasta[index]:
+            res_conserved = False
+
+    # if it does have the conserved residues and the array does not already contain the value... then add to array
+    if res_conserved and not repeat:
+        array_below_500mil.append(each)
+
+    # if the array is the max size ...
+    if len(array_below_500mil) == max_array_size:
+        print("max size array reached... being handled now")
+        # convert to a unique value set and loop through and add to files...
+        unique_values = list(set(array_below_500mil))
+        array_below_500mil = [] # reset the array to be empty (this should help to conserve memory) -- I hope
+
+        # loop through and print the unique values to folders ...
+
+        while len(unique_values) > 0:  # I will be deleting the values as I print them to files
+            i = 0
+            # start = ((out_file_count - 1) * num_per_file) + 1
+            # stop = start + num_per_file - 1
+            output_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta"
+            with open(output_file_name, 'w+') as output_file:
+                for seq in unique_values[:fastas_per_file]:
+                    output_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str((i + 1 + (fastas_per_file * (num_output_files - 1)))) +
+                                      "\n" + ''.join(unique_values[i]) + "\n")
+                    i += 1
+            print("Wrote output file " + str(num_output_files))
+            unique_values = unique_values[fastas_per_file:]
+            num_output_files += 1
+
+# if there are less than the max array size in the array
+    # either to begin with or leftover --> will be handled by this block of code
+
+# get the unique values
+print("Done handling all arrays of max size")
+unique_values = list(set(array_below_500mil))
+array_below_500mil = [] # reset the array to save memory
+
+while len(unique_values) > 0:  # I will be deleting the values as I print them to files
+    i = 0
+    # start = ((out_file_count - 1) * num_per_file) + 1
+    # stop = start + num_per_file - 1
+    output_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta"
+    with open(output_file_name, 'w+') as output_file:
+        for seq in unique_values[:fastas_per_file]:
+            output_file.write(">" + (sys.argv[1]).split(".")[0] + "_" +
+                                      str((i + 1 + (fastas_per_file * (num_output_files - 1)))) +
+                                      "\n" + ''.join(unique_values[i]) + "\n")
+            i += 1
+    print("Wrote output file " + str(num_output_files))
+    unique_values = unique_values[fastas_per_file:]
+    num_output_files += 1
+
+print("Done Running")
 
 
-
-# with open(second_temp_file, 'w+') as second_temp_file:
-temporary_read_file = open(ref_file_name, 'r')  # open the first temporary file we created
-chunk_size = (len(input_fasta) + 1) * 300000000    # <---- this won't eliminate all possible repeats but should get most
-i = 0
-out_file_count = 1
-while True:
-    data = temporary_read_file.read(chunk_size)  # read in a certain sized data chunk from temp file
-    if not data:  # stop the while loop when no more chunks to read in
-        break
-    ref_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + \
-                    str(out_file_count) +".fasta"
-    with open(ref_file_name, 'w+') as output_file:
-        for each in set(data.split(',')):
-            if not each == "":
-                output_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str((i + 1 + (chunk_size * (out_file_count - 1)))) +
-                  "\n" + each + "\n")
-                i += 1
-    out_file_count += 1
-
-temporary_read_file.close() # close that temporary file
-
-
-
-
-
-
-
-
-
-
-
-# # LOOP THROUGH EACH PERMUTATION AND ADD BACK IN CONSERVED RESIDUES --------------------------------------------------
-# all_shuffled_strings = []
-# for perm in all_nc_permutations: # need to be a small enough number that you can loop through them... (test on RCC for sure)
-#     perm_string = "".join(perm)
-#     i = 0
-#     j = 0
-#     new_perm_string = ""
-#     while i < len(input_fasta):
-#         if i not in conserved_index_list:
-#             new_perm_string += perm_string[j]
-#             i += 1
-#             j += 1
-#         else: # (when i is in the conserved index list)
-#             new_perm_string += input_fasta[i]
-#             i += 1
-#     all_shuffled_strings.append(new_perm_string)
-# print("Added back conserved residues to shuffled array list")
-#
-# # SAVE THE FASTAs TO MULTIPLE OUTPUT FOLDERS
-# out_file_count = 1
-# num_per_file = 100000  # <---------- CHANGE THIS TO CHANGE NUM FASTAs PER OUTPUT FILE ****************************
-# i = 0
-#
-# # create the directory
-# directory = output_folder_path + "/"
-# os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the directory correctly
-# print("Created the Directory")
-#
-# while len(all_shuffled_strings) > 0:
-#     i = 0
-#     start = ((out_file_count - 1) * num_per_file) + 1
-#     stop = start + num_per_file - 1
-#     if len(all_shuffled_strings) < num_per_file:
-#         stop = start + len(all_shuffled_strings) - 1
-#     ref_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + \
-#                     str(out_file_count) + "_(" + str(start) + "-" + str(stop) + ").fasta"
-#
-#     with open(ref_file_name, 'w+') as reference_file:
-#         for seq in all_shuffled_strings[:num_per_file]:
-#             reference_file.write(">" + (sys.argv[1]).split(".")[0] + "_" + str((i + 1 + (num_per_file * (out_file_count - 1)))) +
-#                                  "\n" + all_shuffled_strings[i] + "\n")
-#             i += 1
-#     print("Wrote output file " + str(out_file_count))
-#     all_shuffled_strings = all_shuffled_strings[num_per_file:]
-#     out_file_count += 1
-#
 #
 # # == OTHER STUFF (to maybe use later) ============================================================================
 # #pprint.pprint(list(itertools.permutations(not_conserved_residues)))
