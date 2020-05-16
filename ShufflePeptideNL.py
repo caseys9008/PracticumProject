@@ -110,7 +110,7 @@ os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the
 print("Created the Directory")
 
 
-max_array_size = 500000000  # < -- the max size of a functioning python array is 536,870,912 elements.
+max_array_size = 100000000  # < -- the max size of a functioning python array is 536,870,912 elements.
 array_below_500mil = []
 num_output_files = 1
 fastas_per_file = 100000000
@@ -131,6 +131,8 @@ for each in itertools.permutations(input_fasta):
     if res_conserved and not repeat:
         array_below_500mil.append(each)
 
+    if len(array_below_500mil) == 50000000:
+        print("half way to max array size of 100 mil")
     # if the array is the max size ...
     if len(array_below_500mil) == max_array_size:
         print("max size array reached... being handled now")
