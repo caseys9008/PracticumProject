@@ -1,0 +1,1 @@
+>> WAYHNLGTAYYDGIGVDKNPHAVRWWKKAAELGFP | hydro | 51.19 | SASA | 3001.88 | hydroSASA | 1874.63 | hbond-acc | 3 | hbond-donor | 6

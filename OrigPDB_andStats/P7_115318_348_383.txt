@@ -1,0 +1,1 @@
+>> EAQYNMGYHYAEGKGVPRDQGKAVFWYEKAAAAGDV | hydro | 44.23 | SASA | 2893.47 | hydroSASA | 1766.76 | hbond-acc | 0 | hbond-donor | 4
