@@ -92,18 +92,6 @@ for (desc, seq) in myFastaHandler.parse_fasta(input_file, "aa"):  # there will o
 input_fasta_list = list(input_fasta)
 
 
-# MAKE LIST OF ALL RESIDUES TO CONSERVE -----------------------------------------------------------------------------
-not_conserved_residues = ''
-for i in range(len(input_fasta_list)):
-    if i not in conserved_index_list:
-        not_conserved_residues += input_fasta_list[i]
-
-
-# FIND ALL UNIQUE PERMUTATIONS OF THE NON CONSERVED RESIDUES (save to list) -----------------------------------------
-# all_nc_permutations = set(itertools.permutations(not_conserved_residues))
-# print("Saved all shuffles to array")
-
-
 # Create the directory
 directory = output_folder_path + "/"
 os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the directory correctly
