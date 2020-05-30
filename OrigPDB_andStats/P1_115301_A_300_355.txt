@@ -1,1 +1,1 @@
->> DAQNRLGIAYRYGTGVRKNPALSVKWLEKAAKQGLA | hydro | 44.12 | SASA | 3048.10 | hydroSASA | 1746.14 | hbond-acc | 1 | hbond-donor | 4
+>> DAQNRLGIAYRYGTGVRKNPALSVKWLEKAAKQGLA | hydro | 44.12 | SASA | 3048.10 | hydroSASA | 1746.14 | hbond-acc | 1 | hbond-donor | 4 |total-energy | -13 

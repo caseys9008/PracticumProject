@@ -1,1 +1,1 @@
->> RAQFNLGKTFYIGAGINKNTDKAVYWFIKAANQGFT | hydro | 52.22 | SASA | 2886.99 | hydroSASA | 1622.89 | hbond-acc | 0 | hbond-donor | 3
+>> RAQFNLGKTFYIGAGINKNTDKAVYWFIKAANQGFT | hydro | 52.22 | SASA | 2886.99 | hydroSASA | 1622.89 | hbond-acc | 0 | hbond-donor | 3 |total-energy | -22 

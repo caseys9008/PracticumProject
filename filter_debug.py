@@ -5,6 +5,9 @@ from pyrosetta import rosetta
 import hydrogen_bonds
 import metrics
 
+# Run
+#  ls OrigPDB_andStats/*.pdb | awk '{print "python filter_debug.py "$0}' | sed 's/\.pdb//' | sh
+
 # no .pdb
 pdb_file = sys.argv[1]
 
@@ -26,7 +29,7 @@ print("> Sequence: %s" % (pose.sequence()))
 # Create a PyRosetta score function using:
 from pyrosetta.teaching import *
 sfxn = get_score_function(True)
-#print("> Total Energy: %f" % sfxn(pose))
+print("> Total Energy: %f" % sfxn(pose))
 
 
 # Hydrophobicity 
@@ -58,7 +61,8 @@ OUTPUT += "SASA | %3.2f | " % sum(rsd_sasa)
 #OUTPUT += "atomSASA | %3.2f | " % sum(atom_sasa)
 OUTPUT += "hydroSASA | %3.2f | " % sum(rsd_hydrophobic_sasa)
 OUTPUT += "hbond-acc | %d | " % len(buried_unsat_acceptors)
-OUTPUT += "hbond-donor | %d" % len(buried_unsat_donors)
+OUTPUT += "hbond-donor | %d |" % len(buried_unsat_donors)
+OUTPUT += "total-energy | %d \n" % sfxn(pose)
 #print(OUTPUT)
 
 outfile=pdb_file+".txt"
@@ -66,5 +70,5 @@ with open(outfile, "w") as outfile:
             outfile.write(OUTPUT)
 
 
-
+#
 

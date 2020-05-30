@@ -4,6 +4,7 @@ from random import sample
 import math
 import itertools
 import pprint
+import shutil
 # ===================================================================================================================
 class FASTA_Handler:
 
@@ -92,13 +93,31 @@ for (desc, seq) in myFastaHandler.parse_fasta(input_file, "aa"):  # there will o
 input_fasta_list = list(input_fasta)
 
 
-# Create the directory
+# MAKE LIST OF ALL RESIDUES TO CONSERVE -----------------------------------------------------------------------------
+not_conserved_residues = ''
+for i in range(len(input_fasta_list)):
+    if i not in conserved_index_list:
+        not_conserved_residues += input_fasta_list[i]
+
+
+# FIND ALL UNIQUE PERMUTATIONS OF THE NON CONSERVED RESIDUES (save to list) -----------------------------------------
+# all_nc_permutations = set(itertools.permutations(not_conserved_residues))
+# print("Saved all shuffles to array")
+
+
+# Create the temp directory
 directory = output_folder_path + "/"
+print("Temp Directory " + str(directory))
 os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the directory correctly
-print("Created the Directory")
+print("Created the temp Directory")
+
+# Create the final location directory
+final_directory = "./FinalDirectory/"   # ********************************
+os.makedirs(os.path.dirname(final_directory), exist_ok=True)
+print("Created the final Directory")
 
 
-max_array_size = 100000000  # < -- the max size of a functioning python array is 536,870,912 elements.
+max_array_size = 500000000  # < -- the max size of a functioning python array is 536,870,912 elements.
 array_below_500mil = []
 num_output_files = 1
 fastas_per_file = 100000000
@@ -119,8 +138,6 @@ for each in itertools.permutations(input_fasta):
     if res_conserved and not repeat:
         array_below_500mil.append(each)
 
-    if len(array_below_500mil) == 50000000:
-        print("half way to max array size of 100 mil")
     # if the array is the max size ...
     if len(array_below_500mil) == max_array_size:
         print("max size array reached... being handled now")
@@ -132,8 +149,6 @@ for each in itertools.permutations(input_fasta):
 
         while len(unique_values) > 0:  # I will be deleting the values as I print them to files
             i = 0
-            # start = ((out_file_count - 1) * num_per_file) + 1
-            # stop = start + num_per_file - 1
             output_file_name = output_folder_path + "/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta"
             with open(output_file_name, 'w+') as output_file:
                 for seq in unique_values[:fastas_per_file]:
@@ -141,8 +156,11 @@ for each in itertools.permutations(input_fasta):
                                       "\n" + ''.join(unique_values[i]) + "\n")
                     i += 1
             print("Wrote output file " + str(num_output_files))
+            shutil.move(output_file_name, "./FinalDirectory/"  + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta")
+            print("file moved to final location")
             unique_values = unique_values[fastas_per_file:]
             num_output_files += 1
+
 
 # if there are less than the max array size in the array
     # either to begin with or leftover --> will be handled by this block of code
@@ -164,10 +182,16 @@ while len(unique_values) > 0:  # I will be deleting the values as I print them t
                                       "\n" + ''.join(unique_values[i]) + "\n")
             i += 1
     print("Wrote output file " + str(num_output_files))
+    shutil.move(output_file_name, "./FinalDirectory/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
+    print("file moved to final location (the end)")
     unique_values = unique_values[fastas_per_file:]
     num_output_files += 1
 
+
+
 print("Done Running")
+
+
 
 
 #

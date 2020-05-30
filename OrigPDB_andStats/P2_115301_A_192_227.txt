@@ -1,1 +1,1 @@
->> LGQYNLGVAYYYGRGIKKDFSEAVSWYKKSAEQDYA | hydro | 51.08 | SASA | 2926.52 | hydroSASA | 1660.90 | hbond-acc | 1 | hbond-donor | 2
+>> LGQYNLGVAYYYGRGIKKDFSEAVSWYKKSAEQDYA | hydro | 51.08 | SASA | 2926.52 | hydroSASA | 1660.90 | hbond-acc | 1 | hbond-donor | 2 |total-energy | -19 

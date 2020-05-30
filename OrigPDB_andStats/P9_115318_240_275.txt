@@ -1,1 +1,1 @@
->> KAQYGLGILYAKGQGVAPDQEKALILYRMAATQGLA | hydro | 52.36 | SASA | 2946.84 | hydroSASA | 1819.92 | hbond-acc | 1 | hbond-donor | 6
+>> KAQYGLGILYAKGQGVAPDQEKALILYRMAATQGLA | hydro | 52.36 | SASA | 2946.84 | hydroSASA | 1819.92 | hbond-acc | 1 | hbond-donor | 6 |total-energy | -14 

@@ -1,1 +1,1 @@
->> EAQRRWALMLASGRGVAKNEGEALKWFKKAAVAGDV | hydro | 47.17 | SASA | 2972.06 | hydroSASA | 1811.07 | hbond-acc | 1 | hbond-donor | 4
+>> EAQRRWALMLASGRGVAKNEGEALKWFKKAAVAGDV | hydro | 47.17 | SASA | 2972.06 | hydroSASA | 1811.07 | hbond-acc | 1 | hbond-donor | 4 |total-energy | -9 
