@@ -112,15 +112,15 @@ os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the
 print("Created the temp Directory")
 
 # Create the final location directory
-final_directory = "./FinalDirectory/"   # ********************************
+final_directory = "/scratch/midway2/caseys/P8_Shuffled/"   # ********************************
 os.makedirs(os.path.dirname(final_directory), exist_ok=True)
-print("Created the final Directory")
+print("Created the final Directory:  " + final_directory)
 
 
-max_array_size = 500000000  # < -- the max size of a functioning python array is 536,870,912 elements.
+max_array_size = 150000000  # < -- the max size of a functioning python array is 536,870,912 elements.
 array_below_500mil = []
 num_output_files = 1
-fastas_per_file = 100000000
+fastas_per_file = 150000000
 
 
 # loop through each in the itertools.permutations
@@ -156,7 +156,7 @@ for each in itertools.permutations(input_fasta):
                                       "\n" + ''.join(unique_values[i]) + "\n")
                     i += 1
             print("Wrote output file " + str(num_output_files))
-            shutil.move(output_file_name, "./FinalDirectory/"  + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta")
+            shutil.move(output_file_name, "/scratch/midway2/caseys/P8_Shuffled/"  + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta")
             print("file moved to final location")
             unique_values = unique_values[fastas_per_file:]
             num_output_files += 1
@@ -182,12 +182,13 @@ while len(unique_values) > 0:  # I will be deleting the values as I print them t
                                       "\n" + ''.join(unique_values[i]) + "\n")
             i += 1
     print("Wrote output file " + str(num_output_files))
-    shutil.move(output_file_name, "./FinalDirectory/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
+    shutil.move(output_file_name, "/scratch/midway2/caseys/P8_Shuffled/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
     print("file moved to final location (the end)")
     unique_values = unique_values[fastas_per_file:]
     num_output_files += 1
 
-
+os.rmdir(directory)
+print("Removed the temporary directory")
 
 print("Done Running")
 
