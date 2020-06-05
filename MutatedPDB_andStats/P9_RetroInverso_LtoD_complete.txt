@@ -1,0 +1,1 @@
+>> RYLILAKEQDPAVGQGKAYLIGLGYQAKA | hydro | 29.88 | SASA | 3971.88 | hydroSASA | 2374.50 | hbond-acc | 0 | hbond-donor | 7 |total-energy | 391 
