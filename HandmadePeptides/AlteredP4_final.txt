@@ -1,0 +1,1 @@
+>> QVGHNLGNVYLVGLGAPKNPGLAGFLSLKAAVLGHA | hydro | 44.63 | SASA | 2756.04 | hydroSASA | 2015.05 | hbond-acc | 2 | hbond-donor | 2 |total-energy | -12 
