@@ -96,7 +96,7 @@ os.makedirs(os.path.dirname(directory), exist_ok=True)  # this should create the
 print("Created the temp Directory")
 
 # Create the final location directory
-final_directory = "/scratch/midway2/caseys/P8_Shuffled_Reverse/"   # ********************************
+final_directory = "/scratch/midway2/caseys/P4_Shuffled_Reverse/"   # ********************************
 #final_directory = "./FinalTestFolder/"
 os.makedirs(os.path.dirname(final_directory), exist_ok=True)
 print("Created the final Directory:  " + final_directory)
@@ -149,7 +149,7 @@ for each in itertools.permutations(reverse_input_fasta):
                                       "\n" + ''.join(unique_values[i]) + "\n")
                     i += 1
             print("Wrote output file " + str(num_output_files))
-            shutil.move(output_file_name, "/scratch/midway2/caseys/P8_Shuffled_Reverse/"  + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta")
+            shutil.move(output_file_name, "/scratch/midway2/caseys/P4_Shuffled_Reverse/"  + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files)+ ".fasta")
             print("file moved to final location")
             unique_values = unique_values[fastas_per_file:]
             num_output_files += 1
@@ -177,7 +177,7 @@ while len(unique_values) > 0:  # I will be deleting the values as I print them t
     print("Wrote output file " + str(num_output_files))
 
     # uncomment the following line to run on the rcc
-    shutil.move(output_file_name, "/scratch/midway2/caseys/P8_Shuffled_Reverse/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
+    shutil.move(output_file_name, "/scratch/midway2/caseys/P4_Shuffled_Reverse/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
     #shutil.move(output_file_name, "./FinalTestFolder/" + (sys.argv[1]).split(".")[0] + "_OUTPUT_" + str(num_output_files) + ".fasta")
     print("file moved to final location (the end)")
     unique_values = unique_values[fastas_per_file:]
