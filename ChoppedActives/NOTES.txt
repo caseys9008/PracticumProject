@@ -1,0 +1,7 @@
+This will just print the command.
+
+./cycpep.sh P9_robetta.pdb p9.seq p9.design test-run
+
+
+To run it:
+./cycpep.sh P9_robetta.pdb p9.seq p9.design test-run | sh
